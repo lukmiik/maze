@@ -40,7 +40,9 @@ class SimpleDijkstra:
 
     def draw_path(self):
         for i in self.shortest_path:
-            pygame.draw.rect(self.screen, self.settings.shortest_path_color, (i[1]*self.settings.cell_width, i[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height))
+            pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
+                             (i[1]*self.settings.cell_width, i[0]*self.settings.cell_height, 
+                              self.settings.cell_width, self.settings.cell_height))
             pygame.display.update()
             time.sleep(self.settings.shortest_path_time)
 
@@ -54,11 +56,16 @@ class SimpleDijkstra:
             for cell in last:
                 temp = []
                 if cell == self.finish:
-                    pygame.draw.rect(self.screen, self.settings.path_color, (cell[1]*self.settings.cell_width, cell[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height))
+                    pygame.draw.rect(self.screen, self.settings.path_color, 
+                                     (cell[1]*self.settings.cell_width, 
+                                      cell[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height))
                     pygame.display.update()
                     i=0
                     break
-                pygame.draw.rect(self.screen,  self.settings.path_color, (cell[1]*self.settings.cell_width, cell[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height))
+                pygame.draw.rect(self.screen,  self.settings.path_color, 
+                                 (cell[1]*self.settings.cell_width, 
+                                  cell[0]*self.settings.cell_height, 
+                                  self.settings.cell_width, self.settings.cell_height))
                 self.visited.append(cell)
                 temp = self.check_neighbours(cell)
                 next_last.extend(temp)
