@@ -47,6 +47,8 @@ class Main:
         self.button_dijkstra_text = font.render("dijkstra", True, self.settings.font_color)  
         self.button_astar_text = font.render("astar", True, self.settings.font_color)  
         self.button_all_text = font.render("all", True, self.settings.font_color) 
+    
+    def draw_buttons(self):
         pygame.draw.rect(self.screen, self.settings.button_color, self.button_all_paths_rect)
         self.screen.blit(self.button_all_paths_text, 
                          (self.button_all_paths_rect.centerx 
@@ -79,66 +81,67 @@ class Main:
     def main(self):
         self.maze.create_maze()
         self.create_buttons()
-        algorithm = ""
-        flag =1 
-        while flag:           
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if self.button_all_paths_rect.collidepoint(event.pos):
-                        algorithm = "all_paths"
-                        flag =0
-                        break
-                    elif self.button_simple_dijkstra_rect.collidepoint(event.pos):
-                        algorithm = "simple_dijkstra"
-                        flag =0
-                        break
-                    elif self.button_dijkstra_rect.collidepoint(event.pos):
-                        algorithm = "dijkstra"
-                        flag =0
-                        break
-                    elif self.button_astar_rect.collidepoint(event.pos):
-                        algorithm = "astar"
-                        flag =0
-                        break
-                    elif self.button_all_rect.collidepoint(event.pos):
-                        algorithm = "all"
-                        flag =0
-                        break
-        self.maze.draw_maze()
-        time.sleep(1)
-        if algorithm == "all_paths":
-            self.all_paths.solve_maze(self.maze.finish)
-            # print all paths
-            # for key, value in self.all_paths.paths.items():
-            #     print(key, ' : ', value)
-        elif algorithm == "simple_dijkstra":
-            self.simple_dijkstra.solve_maze(self.maze.finish)
-        elif algorithm == "dijkstra":          
-            self.dijkstra.solve_maze(self.maze.finish)          
-        elif algorithm == "astar":
-            self.astar.solve_maze(self.maze.finish)
-        elif algorithm == "all":
-            start_time = time.time()
-            self.simple_dijkstra.solve_maze(self.maze.finish)
-            end_time = time.time()
-            print("Simplified Dijkstra algorithm took", end_time - start_time, "seconds")
-            time.sleep(0.5)
-            self.maze.draw_maze()
-            start_time = time.time()
-            self.dijkstra.solve_maze(self.maze.finish)
-            end_time = time.time()
-            print("Dijkstra algorithm took", end_time - start_time, "seconds")
-            time.sleep(0.5)
-            self.maze.draw_maze()
-            start_time = time.time()
-            self.astar.solve_maze(self.maze.finish)
-            end_time = time.time()
-            print("A* algorithm took", end_time - start_time, "seconds")
-            time.sleep(0.5)
         while True:
+            self.draw_buttons()
+            algorithm = ""
+            flag =1 
+            while flag:           
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.button_all_paths_rect.collidepoint(event.pos):
+                            algorithm = "all_paths"
+                            flag =0
+                            break
+                        elif self.button_simple_dijkstra_rect.collidepoint(event.pos):
+                            algorithm = "simple_dijkstra"
+                            flag =0
+                            break
+                        elif self.button_dijkstra_rect.collidepoint(event.pos):
+                            algorithm = "dijkstra"
+                            flag =0
+                            break
+                        elif self.button_astar_rect.collidepoint(event.pos):
+                            algorithm = "astar"
+                            flag =0
+                            break
+                        elif self.button_all_rect.collidepoint(event.pos):
+                            algorithm = "all"
+                            flag =0
+                            break
+            self.maze.draw_maze()
+            time.sleep(1)
+            if algorithm == "all_paths":
+                self.all_paths.solve_maze(self.maze.finish)
+                # print all paths
+                # for key, value in self.all_paths.paths.items():
+                #     print(key, ' : ', value)
+            elif algorithm == "simple_dijkstra":
+                self.simple_dijkstra.solve_maze(self.maze.finish)
+            elif algorithm == "dijkstra":          
+                self.dijkstra.solve_maze(self.maze.finish)          
+            elif algorithm == "astar":
+                self.astar.solve_maze(self.maze.finish)
+            elif algorithm == "all":
+                start_time = time.time()
+                self.simple_dijkstra.solve_maze(self.maze.finish)
+                end_time = time.time()
+                print("Simplified Dijkstra algorithm took", end_time - start_time, "seconds")
+                time.sleep(0.5)
+                self.maze.draw_maze()
+                start_time = time.time()
+                self.dijkstra.solve_maze(self.maze.finish)
+                end_time = time.time()
+                print("Dijkstra algorithm took", end_time - start_time, "seconds")
+                time.sleep(0.5)
+                self.maze.draw_maze()
+                start_time = time.time()
+                self.astar.solve_maze(self.maze.finish)
+                end_time = time.time()
+                print("A* algorithm took", end_time - start_time, "seconds")
+                time.sleep(0.5)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
