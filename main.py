@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import sys
 from settings import Settings
@@ -23,7 +24,7 @@ class Main:
 
     def create_buttons(self):
         center_x = self.settings.screen_width // 2
-        center_y = self.settings.screen_height // 2       
+        center_y = self.settings.screen_height // 2      
         width_all = 0.7*self.settings.screen_width
         height = 0.1*self.settings.screen_height
         gap_h = 0.1*height
@@ -78,7 +79,8 @@ class Main:
                           self.button_all_rect.centery - self.button_all_text.get_height() // 2)) 
         pygame.display.update()
 
-    def main(self):
+    async def main(self):
+        time.sleep(1)
         self.maze.create_maze()
         self.create_buttons()
         while True:
@@ -110,9 +112,11 @@ class Main:
                         elif self.button_all_rect.collidepoint(event.pos):
                             algorithm = "all"
                             flag =0
-                            break
+                            break  
+                pygame.display.update()
+                await asyncio.sleep(0)   
             self.maze.draw_maze()
-            time.sleep(1)
+            time.sleep(3)
             if algorithm == "all_paths":
                 self.all_paths.solve_maze(self.maze.finish)
                 # print all paths
@@ -142,12 +146,10 @@ class Main:
                 end_time = time.time()
                 print("A* algorithm took", end_time - start_time, "seconds")
                 time.sleep(0.5)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-
+            pygame.display.update()
+            await asyncio.sleep(0)
+            time.sleep(3)
 
 if __name__ == '__main__':
     game = Main()
-    game.main()
+    asyncio.run(game.main())

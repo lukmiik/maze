@@ -3,7 +3,7 @@ import pygame
 class Settings:
     def __init__(self):
         self.maze_width = 30
-        self.maze_height = 20
+        self.maze_height =30
         self.check_maze_size()
         self.start = (1,0)
         self.first = (1,1)

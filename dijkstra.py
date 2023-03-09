@@ -51,7 +51,7 @@ class Dijkstra:
                             self.graph[(row,col)][(r,col)] = row-r
                             break
         self.graph[(self.settings.start)] = {}
-        self.graph[(self.settings.start)][list(self.graph)[1]] = list(self.graph)[1][0] 
+        self.graph[(self.settings.start)][list(self.graph)[1]] = list(self.graph)[1][0]  
         - self.settings.start[0]
         self.graph[self.finish]= {}
     
