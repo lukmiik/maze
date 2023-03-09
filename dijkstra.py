@@ -51,7 +51,7 @@ class Dijkstra:
                             self.graph[(row,col)][(r,col)] = row-r
                             break
         self.graph[(self.settings.start)] = {}
-        self.graph[(self.settings.start)][list(self.graph)[1]] = list(self.graph)[1][0] 
+        self.graph[(self.settings.start)][list(self.graph)[1]] = list(self.graph)[1][0]  
         - self.settings.start[0]
         self.graph[self.finish]= {}
     
@@ -135,7 +135,7 @@ class Dijkstra:
                                      (i[1]*self.settings.cell_width, 
                                       i[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height*(self.parents[i][0]-i[0]+1)))
             pygame.display.update()
-            time.sleep(self.settings.shortest_path_time)
+            time.sleep(2*self.settings.shortest_path_time)
 
     def solve_maze(self,finish):
         self.finish = finish

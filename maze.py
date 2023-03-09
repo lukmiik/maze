@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 class Maze:
     def __init__(self, m):       
@@ -54,6 +55,7 @@ class Maze:
             pygame.display.update()
             self.frontiers.remove(next)
             self.add_frontiers(next[0],next[1])
+            time.sleep(self.settings.solve_time)
 
     def check_valid_connection(self, row, col):
         if (self.grid[row-1][ col] ==1 and self.grid[row+1][ col] ==1 

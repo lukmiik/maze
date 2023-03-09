@@ -2,19 +2,20 @@ import pygame
 
 class Settings:
     def __init__(self):
-        self.maze_width = 30
-        self.maze_height = 20
+        self.maze_width = 10
+        self.maze_height =10
         self.check_maze_size()
         self.start = (1,0)
         self.first = (1,1)
-        self.shortest_path_color = (255,255,0)
+        # self.shortest_path_color = (255,255,0)
+        self.shortest_path_color = (220,0,0)
         self.path_color = (0,34,255)
         self.start_color = (255, 0, 0)
         self.finish_color = (255, 0, 0)
         self.color = (255, 255, 255)
         self.screen_width = 800
         self.screen_height = 800
-        self.create_screen()    
+        # self.create_screen()    
         self.cell_width = self.screen_width/self.maze_width
         self.cell_height = self.screen_height/self.maze_height
         self.solve_time = 0.01
@@ -22,7 +23,7 @@ class Settings:
         pygame.font.init()
         self.font = 'Tahoma'
         self.font_color = (0,0,0)  
-        self.button_color = (255,255,0)
+        self.button_color = (255,140,0)
 
     def create_screen(self):
         pygame.display.init()
