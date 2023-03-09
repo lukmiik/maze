@@ -1,6 +1,7 @@
 import pygame
 import time
 from queue import PriorityQueue
+import asyncio
 
 class Astar:
     def __init__(self,m):
@@ -50,7 +51,7 @@ class Astar:
                 self.p[current[0],current[1]+1] = current
                 self.pq.put((self.f[current[0],current[1]+1], (current[0],current[1]+1)))
 
-    def astar(self):
+    async def astar(self):
         self.pq = PriorityQueue()
         self.pq.put((0, self.settings.start))
         self.g = {}
@@ -76,6 +77,7 @@ class Astar:
                 break
             self.visited.append(current)
             self.add_neighbours(current)
+            await asyncio.sleep(0)
 
     def create_shortest_path(self):
         self.shortest_path = []
@@ -86,7 +88,7 @@ class Astar:
             node = self.p[node]
         self.shortest_path.insert(0, self.p[node])
 
-    def draw_path(self):
+    async def draw_path(self):
         self.create_shortest_path()
         for i in self.shortest_path:
             pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
@@ -94,8 +96,9 @@ class Astar:
                               self.settings.cell_width, self.settings.cell_height))
             pygame.display.update()
             time.sleep(self.settings.shortest_path_time)
+            await asyncio.sleep(0)
 
-    def solve_maze(self, finish):
+    async def solve_maze(self, finish):
         self.finish = finish
-        self.astar()
-        self.draw_path()
+        await self.astar()
+        await self.draw_path()

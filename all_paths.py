@@ -1,6 +1,7 @@
 import pygame
 import time
 import copy
+import asyncio
 
 class AllPaths:
     def __init__(self,m):
@@ -42,22 +43,25 @@ class AllPaths:
                 return
             self.find_pahts(row-1, col, temp, count+1)
 
-    def draw_paths(self):
+    async def draw_paths(self):
         for path in self.paths:
             path = eval(path)
             for cell in path:
                 pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
-                             (cell[1]*self.settings.cell_width, cell[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height))
-                pygame.display.update()
+                             (cell[1]*self.settings.cell_width, cell[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height))              
                 time.sleep(0.01)
-            time.sleep(0.5)
+                pygame.display.update()
+                await asyncio.sleep(0)
+            time.sleep(0.4)
+            await asyncio.sleep(0)
             self.maze.draw_maze()
+            
 
-    def solve_maze(self, finish):
+    async def solve_maze(self, finish):
         self.finish = finish
         st= time.time()
         self.find_pahts(self.settings.start[0], self.settings.start[1],[self.settings.start],0)
         et = time.time()
         print("time to find all paths ", et-st, "seconds")
         self.paths = dict(sorted(self.paths.items(), key=lambda item: item[1]))
-        self.draw_paths()
+        await self.draw_paths()

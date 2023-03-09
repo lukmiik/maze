@@ -1,6 +1,7 @@
 import pygame
 import time
 import copy
+import asyncio
 
 class SimpleDijkstra:
     def __init__(self,m):
@@ -38,15 +39,16 @@ class SimpleDijkstra:
                     break
         self.shortest_path.insert(0,cell)
 
-    def draw_path(self):
+    async def draw_path(self):
         for i in self.shortest_path:
             pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
                              (i[1]*self.settings.cell_width, i[0]*self.settings.cell_height, 
                               self.settings.cell_width, self.settings.cell_height))
             pygame.display.update()
+            await asyncio.sleep(0)
             time.sleep(self.settings.shortest_path_time)
 
-    def simple_dijkstra(self):
+    async def simple_dijkstra(self):
         i=1
         last = [self.settings.start]
         self.visited = []
@@ -72,12 +74,13 @@ class SimpleDijkstra:
                 for i in temp:
                     self.cells.append({"cell": i, "path": cell})
             pygame.display.update()
+            await asyncio.sleep(0)
             last = copy.deepcopy(next_last)
             time.sleep(self.settings.solve_time)
 
 
-    def solve_maze(self, finish):
+    async def solve_maze(self, finish):
         self.finish = finish
-        self.simple_dijkstra()
+        await self.simple_dijkstra()
         self.find_path()
-        self.draw_path()
+        await self.draw_path()

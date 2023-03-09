@@ -2,6 +2,7 @@ import pygame
 import time
 import pygame_gui
 import sys
+import asyncio
 
 class Menu:
     def __init__(self,m):
@@ -73,7 +74,7 @@ class Menu:
          
         pygame.display.update()
 
-    def set_maze_size(self):
+    async def set_maze_size(self):
         pygame.font.SysFont(self.settings.font, 20, bold=True)
         self.manager = pygame_gui.UIManager((self.settings.screen_width, 
                                                self.settings.screen_height))
@@ -108,6 +109,7 @@ class Menu:
             self.screen.blit(height, heightRect)
             self.manager.draw_ui(self.screen)
             pygame.display.update()
+            await asyncio.sleep(0)
         pygame.mouse.set_cursor(*pygame.cursors.arrow)
         self.settings.maze_width = size["width"]
         self.settings.maze_height = size["height"]

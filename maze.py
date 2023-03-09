@@ -1,6 +1,7 @@
 import pygame
 import random
 import time
+import asyncio
 
 class Maze:
     def __init__(self, m):       
@@ -26,7 +27,7 @@ class Maze:
             if self.grid[i][self.settings.maze_width-2]==1:
                 return (i,self.settings.maze_width-1)
             
-    def create_grid(self):
+    async def create_grid(self):
         self.grid[self.settings.first[0]][self.settings.first[1]] = 1
         self.grid[self.settings.start[0]][self.settings.start[1]] = 1
         pygame.draw.rect(self.screen, self.settings.start_color, 
@@ -56,6 +57,16 @@ class Maze:
             self.frontiers.remove(next)
             self.add_frontiers(next[0],next[1])
             time.sleep(self.settings.solve_time)
+            await asyncio.sleep(0)
+        self.finish = self.set_finish()
+        self.grid[self.finish[0]][self.finish[1]] = 1
+        self.add_connections()
+        pygame.draw.rect(self.screen, self.settings.finish_color, 
+                         (self.finish[1]*self.settings.cell_width, 
+                          self.finish[0]*self.settings.cell_height, self.settings.cell_width, 
+                          self.settings.cell_height))
+        pygame.display.update()
+        await asyncio.sleep(0)
 
     def check_valid_connection(self, row, col):
         if (self.grid[row-1][ col] ==1 and self.grid[row+1][ col] ==1 
@@ -106,13 +117,5 @@ class Maze:
                           self.settings.cell_height))
         pygame.display.update()
 
-    def create_maze(self):
-        self.create_grid()
-        self.finish = self.set_finish()
-        self.grid[self.finish[0]][self.finish[1]] = 1
-        self.add_connections()
-        pygame.draw.rect(self.screen, self.settings.finish_color, 
-                         (self.finish[1]*self.settings.cell_width, 
-                          self.finish[0]*self.settings.cell_height, self.settings.cell_width, 
-                          self.settings.cell_height))
-        pygame.display.update()
+    async def create_maze(self):
+        await self.create_grid()

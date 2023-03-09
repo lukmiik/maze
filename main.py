@@ -1,3 +1,4 @@
+import asyncio
 import pygame
 import sys
 import pygame_gui
@@ -19,8 +20,8 @@ class Main:
                                                self.settings.screen_height))
         self.menu = Menu(self)
 
-    def main(self):        
-        self.menu.set_maze_size()
+    async def main(self):        
+        await self.menu.set_maze_size()
         self.grid = [[0 for i in range(self.settings.maze_width)] 
                      for j in range(self.settings.maze_height)]
         self.maze = Maze(self)
@@ -28,9 +29,9 @@ class Main:
         self.dijkstra = Dijkstra(self)
         self.astar = Astar(self)
         self.all_paths = AllPaths(self)
-        self.maze.create_maze()
+        await self.maze.create_maze()
         self.menu.create_buttons()
-        time.sleep(1)
+        time.sleep(0.5)
         while True:
             self.menu.draw_buttons()
             algorithm = ""
@@ -65,41 +66,45 @@ class Main:
                             algorithm = "new"
                             flag =0
                             break  
+                pygame.display.update()
+                await asyncio.sleep(0)
             time.sleep(0.2)
             self.maze.draw_maze()
             if algorithm == "all_paths":
-                self.all_paths.solve_maze(self.maze.finish)
+                await self.all_paths.solve_maze(self.maze.finish)
                 # print all paths
                 # for key, value in self.all_paths.paths.items():
                 #     print(key, ' : ', value)
             elif algorithm == "simple_dijkstra":
-                self.simple_dijkstra.solve_maze(self.maze.finish)
+                await self.simple_dijkstra.solve_maze(self.maze.finish)
             elif algorithm == "dijkstra":          
-                self.dijkstra.solve_maze(self.maze.finish)          
+                await self.dijkstra.solve_maze(self.maze.finish)          
             elif algorithm == "astar":
-                self.astar.solve_maze(self.maze.finish)
+                await self.astar.solve_maze(self.maze.finish)
             elif algorithm == "all":
                 start_time = time.time()
-                self.simple_dijkstra.solve_maze(self.maze.finish)
+                await self.simple_dijkstra.solve_maze(self.maze.finish)
                 end_time = time.time()
                 print("Simplified Dijkstra algorithm took", end_time - start_time, "seconds")
                 time.sleep(0.5)
                 self.maze.draw_maze()
                 start_time = time.time()
-                self.dijkstra.solve_maze(self.maze.finish)
+                await self.dijkstra.solve_maze(self.maze.finish)
                 end_time = time.time()
                 print("Dijkstra algorithm took", end_time - start_time, "seconds")
                 time.sleep(0.5)
                 self.maze.draw_maze()
                 start_time = time.time()
-                self.astar.solve_maze(self.maze.finish)
+                await self.astar.solve_maze(self.maze.finish)
                 end_time = time.time()
                 print("A* algorithm took", end_time - start_time, "seconds")
                 time.sleep(0.5)
             elif algorithm == "new":
                 game = Main()
-                game.main()
+                await game.main()
+            pygame.display.update()
+            await asyncio.sleep(0)
 
 if __name__ == '__main__':
     game = Main()
-    game.main()
+    asyncio.run(game.main())
