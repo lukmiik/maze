@@ -55,7 +55,12 @@ class AllPaths:
             time.sleep(0.4)
             await asyncio.sleep(0)
             self.maze.draw_maze()
-            
+    
+    async def make_paths(self,finish):
+        self.finish = finish
+        self.find_pahts(self.settings.start[0], self.settings.start[1],[self.settings.start],0)
+        await self.draw_paths()
+        return self.paths
 
     async def solve_maze(self, finish):
         self.finish = finish
