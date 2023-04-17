@@ -24,6 +24,8 @@ class Settings:
         self.font = 'Tahoma'
         self.font_color = (0,0,0)  
         self.button_color = (255,140,0)
+        self.corner_speed = 1
+        self.acceleration = 1
 
     def create_screen(self):
         pygame.display.init()

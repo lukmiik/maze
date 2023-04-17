@@ -17,17 +17,19 @@ class Menu:
         gap_h = 0.1*height
         gap_w = 0.05*width_all
         width = 0.3*width_all
-        self.button_all_paths_rect = pygame.Rect(center_x - width_all//2, 
-                                                 y, width_all, height)
+        self.button_all_rect = pygame.Rect(center_x - width_all//2, 
+                                                 y + height + gap_h, width_all, height)
         self.button_simple_dijkstra_rect = pygame.Rect(center_x - 1.5*width - gap_w, 
-                                                       y + height + gap_h, width, height)
-        self.button_dijkstra_rect = pygame.Rect(center_x - 0.5*width, y + height + gap_h,
+                                                       y, width, height)
+        self.button_dijkstra_rect = pygame.Rect(center_x - 0.5*width, y,
                                                 width, height)
         self.button_astar_rect = pygame.Rect(center_x + 0.5*width + gap_w, 
-                                             y + height + gap_h, width, height)
-        self.button_all_rect = pygame.Rect(center_x - width_all//2,y + 2*height + 2*gap_h, 
+                                             y, width, height)
+        self.button_all_paths_rect = pygame.Rect(center_x - width_all//2,y + 2*height + 2*gap_h, 
                                            width_all, height)
-        self.new_maze_rect = pygame.Rect(center_x - width_all//2, y + 3*height + 3*gap_h, 
+        self.new_maze_rect = pygame.Rect(center_x - width_all//2, y + 4*height + 4*gap_h, 
+                                           width_all, height)
+        self.fastest_rect = pygame.Rect(center_x - width_all//2, y + 3*height + 3*gap_h, 
                                            width_all, height)
         font = pygame.font.SysFont(self.settings.font, 20, bold=True)
         self.button_all_paths_text = font.render("find all paths", True, 
@@ -36,8 +38,9 @@ class Menu:
                                                        self.settings.font_color) 
         self.button_dijkstra_text = font.render("dijkstra", True, self.settings.font_color)  
         self.button_astar_text = font.render("astar", True, self.settings.font_color)  
-        self.button_all_text = font.render("all", True, self.settings.font_color) 
+        self.button_all_text = font.render("all above", True, self.settings.font_color) 
         self.new_maze_text = font.render("new maze", True, self.settings.font_color) 
+        self.fastest_text = font.render("fastest path", True, self.settings.font_color) 
     
     def draw_buttons(self):
         pygame.draw.rect(self.screen, self.settings.button_color, self.button_all_paths_rect)
@@ -71,7 +74,10 @@ class Menu:
         self.screen.blit(self.new_maze_text, 
                          (self.new_maze_rect.centerx - self.new_maze_text.get_width() // 2,
                           self.new_maze_rect.centery - self.new_maze_text.get_height() // 2)) 
-         
+        pygame.draw.rect(self.screen, self.settings.button_color, self.fastest_rect) 
+        self.screen.blit(self.fastest_text, 
+                         (self.fastest_rect.centerx - self.fastest_text.get_width() // 2,
+                          self.fastest_rect.centery - self.fastest_text.get_height() // 2)) 
         pygame.display.update()
 
     async def set_maze_size(self):

@@ -8,6 +8,7 @@ from simplified_dijkstra import SimpleDijkstra
 from dijkstra import Dijkstra
 from astar import Astar
 from all_paths import AllPaths
+from fastest_path import Fastest
 from menu import Menu
 import time
 
@@ -29,6 +30,7 @@ class Main:
         self.dijkstra = Dijkstra(self)
         self.astar = Astar(self)
         self.all_paths = AllPaths(self)
+        self.fastest_path = Fastest(self)
         await self.maze.create_maze()
         self.menu.create_buttons()
         time.sleep(0.5)
@@ -66,6 +68,10 @@ class Main:
                             algorithm = "new"
                             flag =0
                             break  
+                        elif self.menu.fastest_rect.collidepoint(event.pos):
+                            algorithm = "fastest"
+                            flag =0
+                            break  
                 pygame.display.update()
                 await asyncio.sleep(0)
             time.sleep(0.2)
@@ -99,6 +105,8 @@ class Main:
                 end_time = time.time()
                 print("A* algorithm took", end_time - start_time, "seconds")
                 time.sleep(0.5)
+            elif algorithm == "fastest":
+                await self.fastest_path.fastest(self.maze.finish)
             elif algorithm == "new":
                 game = Main()
                 await game.main()
