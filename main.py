@@ -78,9 +78,6 @@ class Main:
             self.maze.draw_maze()
             if algorithm == "all_paths":
                 await self.all_paths.solve_maze(self.maze.finish)
-                # print all paths
-                # for key, value in self.all_paths.paths.items():
-                #     print(key, ' : ', value)
             elif algorithm == "simple_dijkstra":
                 await self.simple_dijkstra.solve_maze(self.maze.finish)
             elif algorithm == "dijkstra":          

@@ -13,6 +13,7 @@ class Settings:
         self.start_color = (255, 0, 0)
         self.finish_color = (255, 0, 0)
         self.color = (255, 255, 255)
+        self.fastest_path_color = (255,255,0)
         self.screen_width = 800
         self.screen_height = 800
         # self.create_screen()    
@@ -25,6 +26,7 @@ class Settings:
         self.font_color = (0,0,0)  
         self.button_color = (255,140,0)
         self.corner_speed = 1
+        self.start_speed = 1
         self.acceleration = 1
 
     def create_screen(self):

@@ -87,8 +87,8 @@ class Menu:
         self.width_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((self.settings.screen_width/1.7, self.settings.screen_height/3), (self.settings.screen_width/4, self.settings.screen_height/20)), manager=self.manager,object_id='#w')
         self.height_input = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect((self.settings.screen_width/1.7, self.settings.screen_height-self.settings.screen_height/3), (self.settings.screen_width/4, self.settings.screen_height/20)), manager=self.manager,object_id='#h')
         font = pygame.font.SysFont(self.settings.font, 20, bold=True)
-        width = font.render('Input maze width (5-500, Enter)', True, self.settings.font_color)
-        height = font.render('Input maze height (5-500, Enter)', True, self.settings.font_color)
+        width = font.render('Input maze width (5-100, Enter)', True, self.settings.font_color)
+        height = font.render('Input maze height (5-100, Enter)', True, self.settings.font_color)
         widthRect = width.get_rect(topleft=(self.settings.screen_width/8, self.settings.screen_height/3+5))
         heightRect = height.get_rect(topleft=(self.settings.screen_width/8, self.settings.screen_height-self.settings.screen_height/3+5))
         
