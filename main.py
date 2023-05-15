@@ -33,6 +33,7 @@ class Main:
         self.fastest_path = Fastest(self)
         await self.maze.create_maze()
         self.menu.create_buttons()
+        menu_hide = False
         time.sleep(0.5)
         while True:
             self.menu.draw_buttons()
@@ -71,7 +72,22 @@ class Main:
                         elif self.menu.fastest_rect.collidepoint(event.pos):
                             algorithm = "fastest"
                             flag =0
-                            break  
+                            break 
+                        elif self.menu.button_image.collidepoint(event.pos):
+                            self.maze.draw_maze()
+                            self.menu.blit_hamburger()
+                            flag = 0
+                            menu_hide = True
+                pygame.display.update()
+                await asyncio.sleep(0)
+            while menu_hide:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.menu.button_image.collidepoint(event.pos):
+                            menu_hide = False
                 pygame.display.update()
                 await asyncio.sleep(0)
             time.sleep(0.2)

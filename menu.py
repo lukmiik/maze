@@ -77,8 +77,41 @@ class Menu:
         pygame.draw.rect(self.screen, self.settings.button_color, self.fastest_rect) 
         self.screen.blit(self.fastest_text, 
                          (self.fastest_rect.centerx - self.fastest_text.get_width() // 2,
-                          self.fastest_rect.centery - self.fastest_text.get_height() // 2)) 
+                          self.fastest_rect.centery - self.fastest_text.get_height() // 2))
+        self.blit_hamburger()
         pygame.display.update()
+
+    def blit_hamburger(self):
+        x = self.screen.get_width() - self.settings.cell_width
+        y = 0
+        width = int(self.settings.cell_width)
+        height = int(self.settings.cell_height)
+        padding_x = 1/5 * width
+        padding_y = 1/4 * height
+        self.button_image = pygame.Rect(x,y,width ,height )
+        pygame.draw.rect(self.screen, (255,255,255), self.button_image)
+        line_thickness = height //12
+
+        print(height)
+        print(padding_y)
+        line_1_start = (x + padding_x, y + padding_y)
+        line_1_end = (x + width - padding_x, y + padding_y)
+
+        line_2_start = (x + padding_x, y + height // 2)
+        line_2_end = (x + width - padding_x, y + height // 2)
+
+        line_3_start = (x + padding_x, y + height - padding_y)
+        line_3_end = (x + width - padding_x, y + height - padding_y)
+
+        pygame.draw.line(self.screen, (0, 0, 0), line_1_start, line_1_end, line_thickness)
+        pygame.draw.line(self.screen, (0, 0, 0), line_2_start, line_2_end, line_thickness)
+        pygame.draw.line(self.screen, (0, 0, 0), line_3_start, line_3_end, line_thickness)
+        # self.button_image = pygame.image.load('menu2.png')
+        # self.button_image = pygame.transform.scale(self.button_image, (int(self.settings.cell_width), int(self.settings.cell_height)))
+        # self.menu_rect = self.button_image.get_rect()
+        # self.menu_rect.center = (self.screen.get_width() - self.settings.cell_width//2,self.settings.cell_height//2)
+        # pygame.draw.rect(self.screen, (255,255,255), self.menu_rect) 
+        # self.screen.blit(self.button_image, self.menu_rect)
 
     async def set_maze_size(self):
         pygame.font.SysFont(self.settings.font, 20, bold=True)
