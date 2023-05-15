@@ -115,26 +115,26 @@ class Dijkstra:
         for i in self.shortest_path[1:]:
             if self.parents[i][0] ==i[0]:         
                 if self.parents[i][1] <i[1]:
-                    pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
+                    pygame.draw.rect(self.screen, self.settings.dijkstra_color, 
                                      (self.parents[i][1]*self.settings.cell_width, 
                                       self.parents[i][0]*self.settings.cell_height, 
                                       self.settings.cell_width*(i[1]-self.parents[i][1]+1), 
                                       self.settings.cell_height))              
                 else:
-                    pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
+                    pygame.draw.rect(self.screen, self.settings.dijkstra_color, 
                                      (i[1]*self.settings.cell_width, 
                                       i[0]*self.settings.cell_height, 
                                       self.settings.cell_width*(self.parents[i][1]-i[1]+1), 
                                       self.settings.cell_height))
             else:
                 if self.parents[i][0] < i[0]:
-                    pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
+                    pygame.draw.rect(self.screen, self.settings.dijkstra_color, 
                                      (self.parents[i][1]*self.settings.cell_width, 
                                       self.parents[i][0]*self.settings.cell_height, 
                                       self.settings.cell_width, 
                                       self.settings.cell_height*(i[0]-self.parents[i][0]+1)))
                 else:
-                    pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
+                    pygame.draw.rect(self.screen, self.settings.dijkstra_color, 
                                      (i[1]*self.settings.cell_width, 
                                       i[0]*self.settings.cell_height, self.settings.cell_width, self.settings.cell_height*(self.parents[i][0]-i[0]+1)))
             pygame.display.update()

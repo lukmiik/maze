@@ -32,13 +32,14 @@ class Main:
         self.all_paths = AllPaths(self)
         self.fastest_path = Fastest(self)
         await self.maze.create_maze()
+        current_maze = self.screen.copy()
         self.menu.create_buttons()
         menu_hide = False
         time.sleep(0.5)
         while True:
             self.menu.draw_buttons()
             algorithm = ""
-            flag =1 
+            flag = 1 
             while flag:           
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
@@ -74,7 +75,8 @@ class Main:
                             flag =0
                             break 
                         elif self.menu.button_image.collidepoint(event.pos):
-                            self.maze.draw_maze()
+                            self.screen.blit(current_maze, (0, 0))
+                            # self.maze.draw_maze()
                             self.menu.blit_hamburger()
                             flag = 0
                             menu_hide = True
@@ -90,40 +92,45 @@ class Main:
                             menu_hide = False
                 pygame.display.update()
                 await asyncio.sleep(0)
-            time.sleep(0.2)
-            self.maze.draw_maze()
-            if algorithm == "all_paths":
-                await self.all_paths.solve_maze(self.maze.finish)
-            elif algorithm == "simple_dijkstra":
-                await self.simple_dijkstra.solve_maze(self.maze.finish)
-            elif algorithm == "dijkstra":          
-                await self.dijkstra.solve_maze(self.maze.finish)          
-            elif algorithm == "astar":
-                await self.astar.solve_maze(self.maze.finish)
-            elif algorithm == "all":
-                start_time = time.time()
-                await self.simple_dijkstra.solve_maze(self.maze.finish)
-                end_time = time.time()
-                print("Simplified Dijkstra algorithm took", end_time - start_time, "seconds")
-                time.sleep(0.5)
+            # time.sleep(0.2)
+            if algorithm:
                 self.maze.draw_maze()
-                start_time = time.time()
-                await self.dijkstra.solve_maze(self.maze.finish)
-                end_time = time.time()
-                print("Dijkstra algorithm took", end_time - start_time, "seconds")
-                time.sleep(0.5)
-                self.maze.draw_maze()
-                start_time = time.time()
-                await self.astar.solve_maze(self.maze.finish)
-                end_time = time.time()
-                print("A* algorithm took", end_time - start_time, "seconds")
-                time.sleep(0.5)
-            elif algorithm == "fastest":
-                await self.fastest_path.fastest(self.maze.finish)
-            elif algorithm == "new":
-                game = Main()
-                await game.main()
+                if algorithm == "all_paths":
+                    await self.all_paths.solve_maze(self.maze.finish)
+                elif algorithm == "simple_dijkstra":
+                    await self.simple_dijkstra.solve_maze(self.maze.finish)
+                elif algorithm == "dijkstra":          
+                    await self.dijkstra.solve_maze(self.maze.finish)          
+                elif algorithm == "astar":
+                    await self.astar.solve_maze(self.maze.finish)
+                elif algorithm == "all":
+                    start_time = time.time()
+                    await self.simple_dijkstra.solve_maze(self.maze.finish)
+                    end_time = time.time()
+                    print("Simplified Dijkstra algorithm took", end_time - start_time, "seconds")
+                    time.sleep(0.5)
+                    self.maze.draw_maze()
+                    start_time = time.time()
+                    await self.dijkstra.solve_maze(self.maze.finish)
+                    end_time = time.time()
+                    print("Dijkstra algorithm took", end_time - start_time, "seconds")
+                    await self.simple_dijkstra.draw_path()
+                    time.sleep(0.5)
+                    self.maze.draw_maze()
+                    start_time = time.time()
+                    await self.astar.solve_maze(self.maze.finish)
+                    end_time = time.time()
+                    print("A* algorithm took", end_time - start_time, "seconds")
+                    await self.simple_dijkstra.draw_path()
+                    await self.dijkstra.draw_shortest_path()
+                    time.sleep(0.5)
+                elif algorithm == "fastest":
+                    await self.fastest_path.fastest(self.maze.finish)
+                elif algorithm == "new":
+                    game = Main()
+                    await game.main()
             pygame.display.update()
+            current_maze = self.screen.copy()
             await asyncio.sleep(0)
 
 if __name__ == '__main__':

@@ -91,7 +91,7 @@ class Astar:
     async def draw_path(self):
         self.create_shortest_path()
         for i in self.shortest_path:
-            pygame.draw.rect(self.screen, self.settings.shortest_path_color, 
+            pygame.draw.rect(self.screen, self.settings.astar_color, 
                              (i[1]*self.settings.cell_width, i[0]*self.settings.cell_height, 
                               self.settings.cell_width, self.settings.cell_height))
             pygame.display.update()
