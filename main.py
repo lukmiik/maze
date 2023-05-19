@@ -121,8 +121,8 @@ class Main:
                     await self.astar.solve_maze(self.maze.finish)
                     end_time = time.time()
                     print("A* algorithm took", end_time - start_time, "seconds")
-                    await self.simple_dijkstra.draw_path()
                     await self.dijkstra.draw_shortest_path()
+                    await self.simple_dijkstra.draw_path()                   
                     time.sleep(0.5)
                 elif algorithm == "fastest":
                     await self.fastest_path.fastest(self.maze.finish)
