@@ -15,6 +15,7 @@ class Settings:
         self.simple_dijkstra_color = (255,255,0)
         self.dijkstra_color = (255,20,147)
         self.astar_color = (0,255,0)
+        self.fastest_path_color = (0,34,255)
         self.screen_width = 800
         self.screen_height = 800
         self.cell_width = self.screen_width/self.maze_width
