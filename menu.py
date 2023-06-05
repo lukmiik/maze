@@ -10,27 +10,26 @@ class Menu:
         self.screen = m.screen
 
     def create_buttons(self):
-        center_x = self.settings.screen_width // 2
+        self.center_x = self.settings.screen_width // 2
         y = self.settings.screen_height//4
-        width_all = 0.7*self.settings.screen_width
+        self.width_all = 0.7*self.settings.screen_width
         height = 0.1*self.settings.screen_height
         gap_h = 0.1*height
-        gap_w = 0.05*width_all
-        width = 0.3*width_all
-        self.button_all_rect = pygame.Rect(center_x - width_all//2, 
-                                                 y + height + gap_h, width_all, height)
-        self.button_simple_dijkstra_rect = pygame.Rect(center_x - 1.5*width - gap_w, 
+        gap_w = 0.05*self.width_all
+        width = 0.3*self.width_all
+        self.button_all_rect = pygame.Rect(self.center_x - self.width_all//2, 
+                                                 y + height + gap_h, self.width_all, height)
+        self.button_simple_dijkstra_rect = pygame.Rect(self.center_x - 1.5*width - gap_w, 
                                                        y, width, height)
-        self.button_dijkstra_rect = pygame.Rect(center_x - 0.5*width, y,
+        self.button_dijkstra_rect = pygame.Rect(self.center_x - 0.5*width, y,
                                                 width, height)
-        self.button_astar_rect = pygame.Rect(center_x + 0.5*width + gap_w, 
+        self.button_astar_rect = pygame.Rect(self.center_x + 0.5*width + gap_w, 
                                              y, width, height)
-        self.button_all_paths_rect = pygame.Rect(center_x - width_all//2,y + 2*height + 2*gap_h, 
-                                           width_all, height)
-        self.new_maze_rect = pygame.Rect(center_x - width_all//2, y + 4*height + 4*gap_h, 
-                                           width_all, height)
-        self.fastest_rect = pygame.Rect(center_x - width_all//2, y + 3*height + 3*gap_h, 
-                                           width_all, height)
+        self.button_all_paths_rect = pygame.Rect(self.center_x - self.width_all//2,y + 2*height + 2*gap_h, self.width_all, height)
+        self.new_maze_rect = pygame.Rect(self.center_x - self.width_all//2, y + 4*height + 4*gap_h, 
+                                           self.width_all, height)
+        self.fastest_rect = pygame.Rect(self.center_x - self.width_all//2, y + 3*height + 3*gap_h, 
+                                           self.width_all, height)
         font = pygame.font.SysFont(self.settings.font, 20, bold=True)
         self.button_all_paths_text = font.render("find all paths", True, 
                                                        self.settings.font_color) 
@@ -82,10 +81,11 @@ class Menu:
         pygame.display.update()
 
     def blit_hamburger(self):
-        x = self.screen.get_width() - self.settings.cell_width
+        width = int(self.screen.get_width()/10)
+        height = int(self.screen.get_height()/10)
+        x = self.screen.get_width() - width
         y = 0
-        width = int(self.settings.cell_width)
-        height = int(self.settings.cell_height)
+
         padding_x = 1/5 * width
         padding_y = 1/4 * height
         self.button_image = pygame.Rect(x,y,width ,height )
@@ -102,6 +102,14 @@ class Menu:
         pygame.draw.line(self.screen, (0, 0, 0), line_1_start, line_1_end, line_thickness)
         pygame.draw.line(self.screen, (0, 0, 0), line_2_start, line_2_end, line_thickness)
         pygame.draw.line(self.screen, (0, 0, 0), line_3_start, line_3_end, line_thickness)
+
+        self.button_info = pygame.Rect(x,y+height,width ,height/4 )
+        pygame.draw.rect(self.screen, (255,255,255), self.button_info)
+        font = pygame.font.SysFont(self.settings.font, 10, bold=True)
+        self.info_text = font.render("show/hide", True, (0,0,0)) 
+        self.screen.blit(self.info_text, 
+                (self.button_info.centerx - self.info_text.get_width() // 2,
+                        self.button_info.centery - self.info_text.get_height() // 2))
 
     async def set_maze_size(self):
         pygame.font.SysFont(self.settings.font, 20, bold=True)
