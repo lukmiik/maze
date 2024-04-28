@@ -1,0 +1,4 @@
+pygame==2.5.2
+pygame-ce==2.4.1
+pygame_gui==0.6.10
+python-i18n==0.3.9
